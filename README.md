@@ -8,7 +8,7 @@ A plugin that displays Pokémon built using [Pokémon Showdown's](https://pokemo
 
 Copy your Pokémon team into a `showdown` code block:
 
-```
+````showdown
 Stunfisk @ Air Balloon
 Ability: Static
 Shiny: Yes
@@ -17,4 +17,4 @@ EVs: 252 HP / 252 SpA / 4 Spe
 - Curse
 - Earthquake
 - Snore
-```
+````
