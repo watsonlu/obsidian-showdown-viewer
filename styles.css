@@ -78,7 +78,7 @@
 }
 
 .sdv-stat-row {
-  display: contents;
+  display: contents; /* stylelint-disable-line plugin/no-unsupported-browser-features */
 }
 
 .sdv-stat-label {

@@ -1,4 +1,4 @@
-import { Plugin } from "obsidian";
+import { Plugin, requestUrl } from "obsidian";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -201,9 +201,8 @@ async function fetchPokemon(species: string): Promise<PokeApiPokemon | null> {
   const key = species.toLowerCase().replace(/[^a-z0-9-]/g, "-").replace(/-+/g, "-");
   if (apiCache.has(key)) return apiCache.get(key)!;
   try {
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${key}`);
-    if (!res.ok) return null;
-    const data: PokeApiPokemon = await res.json();
+    const res = await requestUrl(`https://pokeapi.co/api/v2/pokemon/${key}`);
+    const data = res.json as PokeApiPokemon;
     apiCache.set(key, data);
     return data;
   } catch {

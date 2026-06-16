@@ -110,8 +110,7 @@ function parseEvLine(line) {
   const parts = line.replace(/^EVs:\s*/i, "").split("/");
   for (const part of parts) {
     const m = part.trim().match(/^(\d+)\s+(\w+)$/);
-    if (!m)
-      continue;
+    if (!m) continue;
     const val = parseInt(m[1], 10);
     const label = m[2].toLowerCase();
     const map = {
@@ -122,8 +121,7 @@ function parseEvLine(line) {
       spd: "spd",
       spe: "spe"
     };
-    if (label in map)
-      result[map[label]] = val;
+    if (label in map) result[map[label]] = val;
   }
   return result;
 }
@@ -152,8 +150,7 @@ function parseFirstLine(line) {
 }
 function parseShowdownSet(text) {
   const lines = text.split("\n").map((l) => l.trim()).filter(Boolean);
-  if (lines.length === 0)
-    return null;
+  if (lines.length === 0) return null;
   const first = parseFirstLine(lines[0]);
   const set = __spreadProps(__spreadValues({}, first), {
     ability: null,
@@ -194,10 +191,8 @@ function calcStats(base, set) {
       return Math.floor((2 * b + iv + Math.floor(ev / 4)) * level / 100) + level + 10;
     }
     let stat = Math.floor(Math.floor((2 * b + iv + Math.floor(ev / 4)) * level / 100) + 5);
-    if (mods.plus === key)
-      stat = Math.floor(stat * 1.1);
-    if (mods.minus === key)
-      stat = Math.floor(stat * 0.9);
+    if (mods.plus === key) stat = Math.floor(stat * 1.1);
+    if (mods.minus === key) stat = Math.floor(stat * 0.9);
     return stat;
   };
   return {
@@ -213,13 +208,10 @@ var apiCache = /* @__PURE__ */ new Map();
 function fetchPokemon(species) {
   return __async(this, null, function* () {
     const key = species.toLowerCase().replace(/[^a-z0-9-]/g, "-").replace(/-+/g, "-");
-    if (apiCache.has(key))
-      return apiCache.get(key);
+    if (apiCache.has(key)) return apiCache.get(key);
     try {
-      const res = yield fetch(`https://pokeapi.co/api/v2/pokemon/${key}`);
-      if (!res.ok)
-        return null;
-      const data = yield res.json();
+      const res = yield (0, import_obsidian.requestUrl)(`https://pokeapi.co/api/v2/pokemon/${key}`);
+      const data = res.json;
       apiCache.set(key, data);
       return data;
     } catch (e) {
@@ -232,8 +224,7 @@ function extractBaseStats(data) {
   const block = {};
   for (const s of data.stats) {
     const key = API_STAT_MAP[s.stat.name];
-    if (key)
-      block[key] = s.base_stat;
+    if (key) block[key] = s.base_stat;
   }
   return {
     hp: (_a = block.hp) != null ? _a : 0,
@@ -262,20 +253,15 @@ function renderSet(set, container) {
     const info = header.createEl("div", { cls: "sdv-info" });
     const nameLine = info.createEl("div", { cls: "sdv-name" });
     nameLine.createEl("span", { cls: "sdv-species", text: set.nickname ? `${set.nickname} (${set.species})` : set.species });
-    if (set.gender)
-      nameLine.createEl("span", { cls: `sdv-gender sdv-gender-${set.gender.toLowerCase()}`, text: ` (${set.gender})` });
-    if (set.item)
-      info.createEl("div", { cls: "sdv-item", text: `@ ${set.item}` });
-    if (set.ability)
-      info.createEl("div", { cls: "sdv-ability", text: `Ability: ${set.ability}` });
+    if (set.gender) nameLine.createEl("span", { cls: `sdv-gender sdv-gender-${set.gender.toLowerCase()}`, text: ` (${set.gender})` });
+    if (set.item) info.createEl("div", { cls: "sdv-item", text: `@ ${set.item}` });
+    if (set.ability) info.createEl("div", { cls: "sdv-ability", text: `Ability: ${set.ability}` });
     const natureLine = info.createEl("div", { cls: "sdv-nature" });
     if (set.nature) {
       const mods = NATURE_MODS[set.nature];
       natureLine.createEl("span", { text: `${capitalize(set.nature)} Nature` });
-      if (mods == null ? void 0 : mods.plus)
-        natureLine.createEl("span", { cls: "sdv-plus", text: ` (+${STAT_LABEL[mods.plus]})` });
-      if (mods == null ? void 0 : mods.minus)
-        natureLine.createEl("span", { cls: "sdv-minus", text: ` (\u2212${STAT_LABEL[mods.minus]})` });
+      if (mods == null ? void 0 : mods.plus) natureLine.createEl("span", { cls: "sdv-plus", text: ` (+${STAT_LABEL[mods.plus]})` });
+      if (mods == null ? void 0 : mods.minus) natureLine.createEl("span", { cls: "sdv-minus", text: ` (\u2212${STAT_LABEL[mods.minus]})` });
     }
     if (data) {
       const base = extractBaseStats(data);
@@ -286,10 +272,8 @@ function renderSet(set, container) {
         const ev = (_d = set.evs[key]) != null ? _d : 0;
         const row = statsEl.createEl("div", { cls: "sdv-stat-row" });
         let labelCls = "sdv-stat-label";
-        if (mods.plus === key)
-          labelCls += " sdv-plus";
-        if (mods.minus === key)
-          labelCls += " sdv-minus";
+        if (mods.plus === key) labelCls += " sdv-plus";
+        if (mods.minus === key) labelCls += " sdv-minus";
         row.createEl("span", { cls: labelCls, text: STAT_LABEL[key] });
         row.createEl("span", { cls: "sdv-stat-base", text: String(base[key]) });
         const pct = Math.round(base[key] / 255 * 100);
@@ -297,8 +281,7 @@ function renderSet(set, container) {
         const track = row.createEl("div", { cls: "sdv-bar-track" });
         track.createEl("div", { cls: "sdv-bar-fill", attr: { style: `width:${pct}%;background:${color}` } });
         row.createEl("span", { cls: "sdv-stat-final", text: String(final[key]) });
-        if (ev > 0)
-          row.createEl("span", { cls: "sdv-stat-ev", text: `(${ev} EV)` });
+        if (ev > 0) row.createEl("span", { cls: "sdv-stat-ev", text: `(${ev} EV)` });
       }
     }
     if (set.moves.length > 0) {
