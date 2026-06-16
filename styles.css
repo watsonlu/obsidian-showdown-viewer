@@ -1,0 +1,135 @@
+/* ── Showdown Team Viewer ────────────────────────────────────────────────── */
+
+:root {
+  --sdv-bar-high: #4caf50;
+  --sdv-bar-mid:  #ff9800;
+  --sdv-bar-low:  #f44336;
+}
+
+.sdv-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sdv-card {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.sdv-loader {
+  color: var(--text-muted);
+  font-size: 0.85em;
+}
+
+.sdv-error {
+  color: var(--text-error);
+  white-space: pre-wrap;
+  font-size: 0.85em;
+}
+
+/* ── Header ── */
+.sdv-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.sdv-sprite {
+  image-rendering: pixelated;
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.sdv-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sdv-name {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.sdv-species { color: var(--text-normal); }
+
+.sdv-gender-f { color: #e91e8c; }
+.sdv-gender-m { color: #2196f3; }
+
+.sdv-item    { color: var(--text-muted); font-size: 0.9em; }
+.sdv-ability { color: var(--text-muted); font-size: 0.9em; }
+.sdv-nature  { font-size: 0.9em; }
+
+.sdv-plus  { color: #e53935; }
+.sdv-minus { color: #1e88e5; }
+
+/* ── Stats ── */
+.sdv-stats {
+  display: grid;
+  grid-template-columns: 3rem 2.5rem 1fr 2.5rem auto;
+  align-items: center;
+  gap: 4px 8px;
+  margin-bottom: 10px;
+}
+
+.sdv-stat-row {
+  display: contents;
+}
+
+.sdv-stat-label {
+  font-size: 0.8em;
+  font-weight: 600;
+  text-align: right;
+  color: var(--text-muted);
+}
+
+.sdv-stat-base,
+.sdv-stat-final {
+  font-size: 0.82em;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.sdv-stat-final {
+  color: var(--text-normal);
+  font-weight: 600;
+}
+
+.sdv-stat-ev {
+  font-size: 0.75em;
+  color: var(--text-faint);
+}
+
+.sdv-bar-track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--background-modifier-border);
+  overflow: hidden;
+}
+
+.sdv-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+/* ── Moves ── */
+.sdv-moves {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sdv-move {
+  background: var(--background-primary-alt);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 0.82em;
+  color: var(--text-normal);
+}
