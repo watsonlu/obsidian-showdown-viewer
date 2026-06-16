@@ -1,13 +1,14 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - "*"
+  release:
+    types: [published]
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -15,14 +16,17 @@ jobs:
         with:
           node-version: "18"
 
+      - name: Update manifest version
+        run: |
+          version="${GITHUB_REF#refs/tags/}"
+          jq --arg v "$version" '.version = $v' manifest.json > tmp.json && mv tmp.json manifest.json
+
       - run: npm ci
       - run: npm run build
 
-      - name: Create release
+      - name: Upload release assets
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           tag="${GITHUB_REF#refs/tags/}"
-          gh release create "$tag" \
-            --title "$tag" \
-            main.js manifest.json
+          gh release upload "$tag" main.js manifest.json
