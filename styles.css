@@ -77,9 +77,6 @@
   margin-bottom: 10px;
 }
 
-.sdv-stat-row {
-  display: contents; /* stylelint-disable-line plugin/no-unsupported-browser-features */
-}
 
 .sdv-stat-label {
   font-size: 0.8em;

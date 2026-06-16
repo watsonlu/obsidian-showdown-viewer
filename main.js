@@ -270,18 +270,17 @@ function renderSet(set, container) {
       const statsEl = card.createEl("div", { cls: "sdv-stats" });
       for (const key of STAT_ORDER) {
         const ev = (_d = set.evs[key]) != null ? _d : 0;
-        const row = statsEl.createEl("div", { cls: "sdv-stat-row" });
         let labelCls = "sdv-stat-label";
         if (mods.plus === key) labelCls += " sdv-plus";
         if (mods.minus === key) labelCls += " sdv-minus";
-        row.createEl("span", { cls: labelCls, text: STAT_LABEL[key] });
-        row.createEl("span", { cls: "sdv-stat-base", text: String(base[key]) });
+        statsEl.createEl("span", { cls: labelCls, text: STAT_LABEL[key] });
+        statsEl.createEl("span", { cls: "sdv-stat-base", text: String(base[key]) });
         const pct = Math.round(base[key] / 255 * 100);
         const color = pct >= 66 ? "var(--sdv-bar-high)" : pct >= 33 ? "var(--sdv-bar-mid)" : "var(--sdv-bar-low)";
-        const track = row.createEl("div", { cls: "sdv-bar-track" });
+        const track = statsEl.createEl("div", { cls: "sdv-bar-track" });
         track.createEl("div", { cls: "sdv-bar-fill", attr: { style: `width:${pct}%;background:${color}` } });
-        row.createEl("span", { cls: "sdv-stat-final", text: String(final[key]) });
-        if (ev > 0) row.createEl("span", { cls: "sdv-stat-ev", text: `(${ev} EV)` });
+        statsEl.createEl("span", { cls: "sdv-stat-final", text: String(final[key]) });
+        if (ev > 0) statsEl.createEl("span", { cls: "sdv-stat-ev", text: `(${ev} EV)` });
       }
     }
     if (set.moves.length > 0) {
