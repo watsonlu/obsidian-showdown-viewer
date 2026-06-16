@@ -247,11 +247,6 @@ function extractBaseStats(data) {
 function capitalize(s) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
-function statBar(value, max = 255) {
-  const pct = Math.round(value / max * 100);
-  const color = pct >= 66 ? "var(--sdv-bar-high)" : pct >= 33 ? "var(--sdv-bar-mid)" : "var(--sdv-bar-low)";
-  return `<div class="sdv-bar-track"><div class="sdv-bar-fill" style="width:${pct}%;background:${color}"></div></div>`;
-}
 function renderSet(set, container) {
   return __async(this, null, function* () {
     var _a, _b, _c, _d;
@@ -297,7 +292,10 @@ function renderSet(set, container) {
           labelCls += " sdv-minus";
         row.createEl("span", { cls: labelCls, text: STAT_LABEL[key] });
         row.createEl("span", { cls: "sdv-stat-base", text: String(base[key]) });
-        row.innerHTML += statBar(base[key]);
+        const pct = Math.round(base[key] / 255 * 100);
+        const color = pct >= 66 ? "var(--sdv-bar-high)" : pct >= 33 ? "var(--sdv-bar-mid)" : "var(--sdv-bar-low)";
+        const track = row.createEl("div", { cls: "sdv-bar-track" });
+        track.createEl("div", { cls: "sdv-bar-fill", attr: { style: `width:${pct}%;background:${color}` } });
         row.createEl("span", { cls: "sdv-stat-final", text: String(final[key]) });
         if (ev > 0)
           row.createEl("span", { cls: "sdv-stat-ev", text: `(${ev} EV)` });
