@@ -1,4 +1,4 @@
-# Obsidian Showdown Viewer
+# Pokemon Showdown Viewer
 
 A plugin that displays Pokémon built using [Pokémon Showdown's](https://pokemonshowdown.com/) team builder in [Obsidian](https://obsidian.md/) in a nice way.
 

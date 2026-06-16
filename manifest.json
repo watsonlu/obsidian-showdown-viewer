@@ -1,9 +1,9 @@
 {
   "id": "showdown-viewer",
   "name": "Pokemon Showdown Viewer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "minAppVersion": "1.12.7",
-  "description": "Renders Pokemon built using the Pokemon Showdown team builder in Obsidian.",
+  "description": "Renders Pokemon built using the Pokemon Showdown team builder.",
   "author": "lwatson",
   "isDesktopOnly": false
 }
